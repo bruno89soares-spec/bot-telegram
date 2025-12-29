@@ -3,175 +3,91 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 
 TOKEN = "8538748627:AAGaOYs-V17YITSPENRWWPTJSvVY4ZssCos"
 
-# DADOS REAIS - 27/12/2025 - Fontes: Sofascore, OddsShark, FootballWhispers
+# DADOS REAIS - 30/12/2025 - Fontes: OddsShark, FootballWhispers, Sportskeeda
 JOGOS = {
-    "forest x man city": {
-        "liga": "Premier League", "data": "27/12 - 07h30",
-        "casa": "Forest", "fora": "Man City",
-        "forca_casa": 65, "forca_fora": 85,
-        "gols_casa": 1.3, "gols_fora": 2.4,
-        "gols_sofr_casa": 1.5, "gols_sofr_fora": 0.8,
-        "cantos_casa": 4.5, "cantos_fora": 6.5,
-        "cartoes_casa": 1.8, "cartoes_fora": 1.5,
-        "forma_casa": "LWLWLW", "forma_fora": "WWWWWL",
-        "posicao_casa": 17, "posicao_fora": 2,
-        "h2h_gols": 3.0,
-        "odds_casa": 4.75, "odds_empate": 3.75, "odds_fora": 1.75,
-        "contexto": "City com 7 vitorias seguidas. Forest luta contra rebaixamento."
-    },
-    "liverpool x wolves": {
-        "liga": "Premier League", "data": "27/12 - 10h00",
-        "casa": "Liverpool", "fora": "Wolves",
-        "forca_casa": 90, "forca_fora": 50,
-        "gols_casa": 2.5, "gols_fora": 0.8,
-        "gols_sofr_casa": 0.8, "gols_sofr_fora": 2.0,
-        "cantos_casa": 6.5, "cantos_fora": 3.5,
-        "cartoes_casa": 1.2, "cartoes_fora": 2.0,
-        "forma_casa": "WDDWLL", "forma_fora": "LLLLLL",
-        "posicao_casa": 1, "posicao_fora": 20,
-        "h2h_gols": 2.8,
-        "odds_casa": 1.25, "odds_empate": 6.50, "odds_fora": 10.00,
-        "contexto": "Liverpool campeao! Wolves 6 derrotas seguidas, lanterna."
-    },
-    "arsenal x brighton": {
-        "liga": "Premier League", "data": "27/12 - 10h00",
-        "casa": "Arsenal", "fora": "Brighton",
-        "forca_casa": 88, "forca_fora": 72,
-        "gols_casa": 2.2, "gols_fora": 1.4,
-        "gols_sofr_casa": 0.7, "gols_sofr_fora": 1.3,
-        "cantos_casa": 6.0, "cantos_fora": 5.0,
-        "cartoes_casa": 1.5, "cartoes_fora": 1.8,
-        "forma_casa": "WWLWDW", "forma_fora": "DLDLWW",
-        "posicao_casa": 1, "posicao_fora": 9,
-        "h2h_gols": 2.5,
-        "odds_casa": 1.44, "odds_empate": 4.80, "odds_fora": 8.00,
-        "contexto": "Arsenal lider! Brighton nao marcou em 3 jogos fora."
-    },
-    "brentford x bournemouth": {
-        "liga": "Premier League", "data": "27/12 - 10h00",
-        "casa": "Brentford", "fora": "Bournemouth",
-        "forca_casa": 70, "forca_fora": 68,
-        "gols_casa": 1.6, "gols_fora": 1.4,
-        "gols_sofr_casa": 1.5, "gols_sofr_fora": 1.4,
-        "cantos_casa": 5.0, "cantos_fora": 4.8,
-        "cartoes_casa": 1.8, "cartoes_fora": 1.6,
-        "forma_casa": "WDLLWL", "forma_fora": "DDDLLD",
-        "posicao_casa": 11, "posicao_fora": 12,
-        "h2h_gols": 3.0,
-        "odds_casa": 2.32, "odds_empate": 3.70, "odds_fora": 3.10,
-        "contexto": "Jogo equilibrado. Ambos com forma irregular."
-    },
-    "burnley x everton": {
-        "liga": "Premier League", "data": "27/12 - 10h00",
-        "casa": "Burnley", "fora": "Everton",
-        "forca_casa": 55, "forca_fora": 62,
-        "gols_casa": 0.9, "gols_fora": 1.2,
-        "gols_sofr_casa": 1.8, "gols_sofr_fora": 1.5,
-        "cantos_casa": 4.0, "cantos_fora": 4.5,
-        "cartoes_casa": 2.0, "cartoes_fora": 1.8,
-        "forma_casa": "LLLLLLD", "forma_fora": "DWDLWL",
-        "posicao_casa": 19, "posicao_fora": 15,
-        "h2h_gols": 2.2,
-        "odds_casa": 2.80, "odds_empate": 3.20, "odds_fora": 2.70,
-        "contexto": "Burnley 8 jogos sem vencer! Everton leve favorito."
-    },
-    "west ham x fulham": {
-        "liga": "Premier League", "data": "27/12 - 10h00",
-        "casa": "West Ham", "fora": "Fulham",
-        "forca_casa": 68, "forca_fora": 70,
-        "gols_casa": 1.3, "gols_fora": 1.4,
-        "gols_sofr_casa": 1.5, "gols_sofr_fora": 1.3,
-        "cantos_casa": 4.8, "cantos_fora": 5.0,
-        "cartoes_casa": 1.6, "cartoes_fora": 1.5,
-        "forma_casa": "LWDLDW", "forma_fora": "WDWDLL",
-        "posicao_casa": 13, "posicao_fora": 10,
-        "h2h_gols": 2.5,
-        "odds_casa": 2.63, "odds_empate": 3.40, "odds_fora": 2.65,
-        "contexto": "Jogo MUITO equilibrado. Fulham leve favorito."
-    },
-    "chelsea x aston villa": {
-        "liga": "Premier League", "data": "27/12 - 12h30",
-        "casa": "Chelsea", "fora": "Aston Villa",
-        "forca_casa": 80, "forca_fora": 82,
-        "gols_casa": 2.0, "gols_fora": 1.8,
-        "gols_sofr_casa": 1.2, "gols_sofr_fora": 0.9,
-        "cantos_casa": 5.5, "cantos_fora": 5.2,
-        "cartoes_casa": 1.8, "cartoes_fora": 1.6,
-        "forma_casa": "WDLDWW", "forma_fora": "WWWWWW",
-        "posicao_casa": 4, "posicao_fora": 3,
-        "h2h_gols": 2.8,
-        "odds_casa": 1.85, "odds_empate": 3.75, "odds_fora": 4.00,
-        "contexto": "JOGAO! Villa com 6 VITORIAS SEGUIDAS! Chelsea em casa."
-    },
-    "parma x fiorentina": {
-        "liga": "Serie A", "data": "27/12 - 06h30",
-        "casa": "Parma", "fora": "Fiorentina",
-        "forca_casa": 58, "forca_fora": 72,
-        "gols_casa": 1.2, "gols_fora": 1.6,
-        "gols_sofr_casa": 1.6, "gols_sofr_fora": 1.2,
-        "cantos_casa": 4.5, "cantos_fora": 5.2,
-        "cartoes_casa": 2.0, "cartoes_fora": 1.8,
-        "forma_casa": "LDLDWL", "forma_fora": "WDWDLW",
-        "posicao_casa": 16, "posicao_fora": 5,
-        "h2h_gols": 2.5,
-        "odds_casa": 3.30, "odds_empate": 3.20, "odds_fora": 2.30,
-        "contexto": "Fiorentina favorito. Parma com pior campanha em casa."
-    },
-    "lecce x como": {
-        "liga": "Serie A", "data": "27/12 - 09h00",
-        "casa": "Lecce", "fora": "Como",
-        "forca_casa": 55, "forca_fora": 62,
-        "gols_casa": 1.0, "gols_fora": 1.3,
-        "gols_sofr_casa": 1.5, "gols_sofr_fora": 1.4,
-        "cantos_casa": 4.2, "cantos_fora": 4.8,
-        "cartoes_casa": 2.0, "cartoes_fora": 1.8,
-        "forma_casa": "LDLDLD", "forma_fora": "WDWLWD",
-        "posicao_casa": 17, "posicao_fora": 13,
-        "h2h_gols": 2.2,
-        "odds_casa": 3.50, "odds_empate": 3.20, "odds_fora": 2.20,
-        "contexto": "Como favorito. Lecce luta contra rebaixamento."
-    },
-    "torino x cagliari": {
-        "liga": "Serie A", "data": "27/12 - 09h00",
-        "casa": "Torino", "fora": "Cagliari",
-        "forca_casa": 65, "forca_fora": 58,
-        "gols_casa": 1.4, "gols_fora": 1.1,
-        "gols_sofr_casa": 1.2, "gols_sofr_fora": 1.5,
-        "cantos_casa": 5.0, "cantos_fora": 4.2,
-        "cartoes_casa": 1.8, "cartoes_fora": 2.0,
-        "forma_casa": "WDLDWW", "forma_fora": "LDLDLD",
-        "posicao_casa": 11, "posicao_fora": 15,
-        "h2h_gols": 2.3,
-        "odds_casa": 2.00, "odds_empate": 3.30, "odds_fora": 4.00,
-        "contexto": "Torino favorito em casa."
-    },
-    "udinese x lazio": {
-        "liga": "Serie A", "data": "27/12 - 12h00",
-        "casa": "Udinese", "fora": "Lazio",
-        "forca_casa": 62, "forca_fora": 78,
-        "gols_casa": 1.2, "gols_fora": 1.8,
-        "gols_sofr_casa": 1.4, "gols_sofr_fora": 1.0,
-        "cantos_casa": 4.5, "cantos_fora": 5.5,
-        "cartoes_casa": 1.8, "cartoes_fora": 1.6,
-        "forma_casa": "WDLDWL", "forma_fora": "WWWDWW",
-        "posicao_casa": 10, "posicao_fora": 4,
-        "h2h_gols": 2.5,
-        "odds_casa": 3.50, "odds_empate": 3.40, "odds_fora": 2.10,
-        "contexto": "Lazio favorito. Em otima fase."
-    },
-    "pisa x juventus": {
-        "liga": "Serie A", "data": "27/12 - 14h45",
-        "casa": "Pisa", "fora": "Juventus",
-        "forca_casa": 55, "forca_fora": 82,
-        "gols_casa": 1.0, "gols_fora": 1.6,
-        "gols_sofr_casa": 1.5, "gols_sofr_fora": 0.6,
+    "burnley x newcastle": {
+        "liga": "Premier League", "data": "30/12 - 14h30",
+        "casa": "Burnley", "fora": "Newcastle",
+        "forca_casa": 45, "forca_fora": 75,
+        "gols_casa": 0.5, "gols_fora": 1.8,
+        "gols_sofr_casa": 1.8, "gols_sofr_fora": 0.9,
         "cantos_casa": 4.0, "cantos_fora": 5.5,
+        "cartoes_casa": 2.2, "cartoes_fora": 1.6,
+        "forma_casa": "LLLLLD", "forma_fora": "WDWWLW",
+        "posicao_casa": 19, "posicao_fora": 5,
+        "h2h_gols": 2.3,
+        "odds_casa": 4.50, "odds_empate": 3.80, "odds_fora": 1.69,
+        "contexto": "Newcastle FAVORITO. Burnley em crise, luta contra rebaixamento."
+    },
+    "chelsea x bournemouth": {
+        "liga": "Premier League", "data": "30/12 - 14h30",
+        "casa": "Chelsea", "fora": "Bournemouth",
+        "forca_casa": 78, "forca_fora": 62,
+        "gols_casa": 2.0, "gols_fora": 1.2,
+        "gols_sofr_casa": 1.3, "gols_sofr_fora": 2.1,
+        "cantos_casa": 5.5, "cantos_fora": 4.5,
+        "cartoes_casa": 1.8, "cartoes_fora": 1.9,
+        "forma_casa": "LDWDLD", "forma_fora": "LDDDLL",
+        "posicao_casa": 4, "posicao_fora": 13,
+        "h2h_gols": 3.0,
+        "odds_casa": 1.57, "odds_empate": 4.20, "odds_fora": 5.25,
+        "contexto": "Chelsea FAVORITO. Bournemouth 9 jogos sem vencer! Sofreu 3+ gols em 6 jogos fora."
+    },
+    "forest x everton": {
+        "liga": "Premier League", "data": "30/12 - 14h30",
+        "casa": "Forest", "fora": "Everton",
+        "forca_casa": 65, "forca_fora": 62,
+        "gols_casa": 1.2, "gols_fora": 1.1,
+        "gols_sofr_casa": 1.4, "gols_sofr_fora": 1.3,
+        "cantos_casa": 4.5, "cantos_fora": 4.2,
         "cartoes_casa": 1.8, "cartoes_fora": 2.0,
-        "forma_casa": "DLLLWD", "forma_fora": "WWLWDD",
-        "posicao_casa": 18, "posicao_fora": 6,
+        "forma_casa": "LLWLWL", "forma_fora": "DLLWWL",
+        "posicao_casa": 10, "posicao_fora": 15,
         "h2h_gols": 2.0,
-        "odds_casa": 6.00, "odds_empate": 4.10, "odds_fora": 1.47,
-        "contexto": "Juventus GRANDE favorito. Defesa solida (0.6 gols sofridos)."
+        "odds_casa": 2.10, "odds_empate": 3.25, "odds_fora": 3.60,
+        "contexto": "Forest leve favorito. H2H: Under 2.5 em 8 de 10 jogos!"
+    },
+    "west ham x brighton": {
+        "liga": "Premier League", "data": "30/12 - 14h30",
+        "casa": "West Ham", "fora": "Brighton",
+        "forca_casa": 55, "forca_fora": 68,
+        "gols_casa": 1.0, "gols_fora": 1.4,
+        "gols_sofr_casa": 1.8, "gols_sofr_fora": 1.3,
+        "cantos_casa": 4.2, "cantos_fora": 5.0,
+        "cartoes_casa": 1.8, "cartoes_fora": 1.6,
+        "forma_casa": "LLLDLL", "forma_fora": "LDLDLW",
+        "posicao_casa": 14, "posicao_fora": 9,
+        "h2h_gols": 2.2,
+        "odds_casa": 3.12, "odds_empate": 3.40, "odds_fora": 2.12,
+        "contexto": "Brighton FAVORITO. West Ham em crise total!"
+    },
+    "arsenal x aston villa": {
+        "liga": "Premier League", "data": "30/12 - 15h15",
+        "casa": "Arsenal", "fora": "Aston Villa",
+        "forca_casa": 88, "forca_fora": 85,
+        "gols_casa": 2.2, "gols_fora": 2.0,
+        "gols_sofr_casa": 0.7, "gols_sofr_fora": 0.9,
+        "cantos_casa": 6.0, "cantos_fora": 5.5,
+        "cartoes_casa": 1.5, "cartoes_fora": 1.6,
+        "forma_casa": "WWWLWD", "forma_fora": "WWWWWW",
+        "posicao_casa": 2, "posicao_fora": 3,
+        "h2h_gols": 2.8,
+        "odds_casa": 1.47, "odds_empate": 4.33, "odds_fora": 7.00,
+        "contexto": "JOGAO! Arsenal favorito. Villa com 11 VITORIAS SEGUIDAS em todas competicoes!"
+    },
+    "man utd x wolves": {
+        "liga": "Premier League", "data": "30/12 - 15h15",
+        "casa": "Man Utd", "fora": "Wolves",
+        "forca_casa": 72, "forca_fora": 35,
+        "gols_casa": 1.6, "gols_fora": 0.5,
+        "gols_sofr_casa": 1.2, "gols_sofr_fora": 2.2,
+        "cantos_casa": 5.2, "cantos_fora": 3.0,
+        "cartoes_casa": 1.8, "cartoes_fora": 2.2,
+        "forma_casa": "WLDWDW", "forma_fora": "LLLLLL",
+        "posicao_casa": 7, "posicao_fora": 20,
+        "h2h_gols": 2.5,
+        "odds_casa": 1.33, "odds_empate": 5.60, "odds_fora": 9.00,
+        "contexto": "Man Utd GRANDE FAVORITO. Wolves LANTERNA com 6+ derrotas seguidas!"
     },
 }
 def calcular_prob_resultado(jogo):
@@ -302,19 +218,19 @@ MELHORES APOSTAS:
     return analise
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("BOT DE ANALISE ESPORTIVA\nDados: Sofascore, OddsShark (27/12)\n\nComandos:\n/jogos - Todos os jogos\n/melhores - Melhores apostas\n/premier - Premier League\n/seriea - Serie A\n\nOu digite: Liverpool x Wolves")
+    await update.message.reply_text("BOT DE ANALISE ESPORTIVA\nDados: OddsShark, FootballWhispers (30/12)\n\nComandos:\n/jogos - Todos os jogos\n/melhores - Melhores apostas\n/premier - Premier League\n\nOu digite: Arsenal x Aston Villa")
 
 async def jogos(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    lista = "JOGOS 27/12:\n\n"
+    lista = "JOGOS 30/12 - PREMIER LEAGUE:\n\n"
     for jogo_key, dados in JOGOS.items():
         p1, pe, p2 = calcular_prob_resultado(dados)
         fav = dados["casa"] if p1 > p2 else dados["fora"]
         prob_fav = max(p1, p2)
-        lista += f"{jogo_key.title()}\n  {dados['data']} | {dados['liga']}\n  Favorito: {fav} ({prob_fav}%)\n\n"
+        lista += f"{jogo_key.title()}\n  {dados['data']}\n  Favorito: {fav} ({prob_fav}%)\n\n"
     await update.message.reply_text(lista)
 
 async def melhores(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    lista = "MELHORES APOSTAS 27/12:\n\n"
+    lista = "MELHORES APOSTAS 30/12:\n\n"
     todas = []
     for jogo_key, jogo in JOGOS.items():
         p1, pe, p2 = calcular_prob_resultado(jogo)
@@ -323,7 +239,7 @@ async def melhores(update: Update, context: ContextTypes.DEFAULT_TYPE):
         pca = calcular_prob_cartoes(jogo)
         melhores_jogo = encontrar_melhor_aposta(jogo, p1, pe, p2, pg, pc, pca)
         for ap, prob, un in melhores_jogo:
-            if prob >= 60:
+            if prob >= 55:
                 todas.append((jogo_key, jogo["data"], ap, prob, un))
     todas.sort(key=lambda x: x[3], reverse=True)
     for i, (j, data, ap, prob, un) in enumerate(todas[:12], 1):
@@ -332,19 +248,10 @@ async def melhores(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(lista)
 
 async def premier(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    lista = "PREMIER LEAGUE 27/12:\n\n"
+    lista = "PREMIER LEAGUE 30/12:\n\n"
     for jogo_key, dados in JOGOS.items():
-        if dados["liga"] == "Premier League":
-            p1, pe, p2 = calcular_prob_resultado(dados)
-            lista += f"{jogo_key.title()}\n  {dados['data']}\n  {dados['casa']} {p1}% | Emp {pe}% | {dados['fora']} {p2}%\n  Forma: {dados['forma_casa']} vs {dados['forma_fora']}\n\n"
-    await update.message.reply_text(lista)
-
-async def seriea(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    lista = "SERIE A 27/12:\n\n"
-    for jogo_key, dados in JOGOS.items():
-        if dados["liga"] == "Serie A":
-            p1, pe, p2 = calcular_prob_resultado(dados)
-            lista += f"{jogo_key.title()}\n  {dados['data']}\n  {dados['casa']} {p1}% | Emp {pe}% | {dados['fora']} {p2}%\n  Forma: {dados['forma_casa']} vs {dados['forma_fora']}\n\n"
+        p1, pe, p2 = calcular_prob_resultado(dados)
+        lista += f"{jogo_key.title()}\n  {dados['data']}\n  {dados['casa']} {p1}% | Emp {pe}% | {dados['fora']} {p2}%\n  Forma: {dados['forma_casa']} vs {dados['forma_fora']}\n\n"
     await update.message.reply_text(lista)
 
 async def mensagem(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -361,7 +268,6 @@ def main():
     app.add_handler(CommandHandler("jogos", jogos))
     app.add_handler(CommandHandler("melhores", melhores))
     app.add_handler(CommandHandler("premier", premier))
-    app.add_handler(CommandHandler("seriea", seriea))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, mensagem))
     print("Bot iniciado!")
     app.run_polling()
